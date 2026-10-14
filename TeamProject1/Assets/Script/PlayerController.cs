@@ -6,7 +6,12 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    public enum CurrentPlayerMode //What mode/powerup the player is currently in
+    {
+        Base=0,
+        Dog=1,
+        Bird=2
+    }
     private Rigidbody2D rb;
 
     public float dirx = 0f;
@@ -26,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Text HealthText;//show health
     public float Health = 5f;
     public Image HealthBar;
-    private float MaxHealth, CureentHealth;
+    private float MaxHealth, CurrentHealth;
 
     [SerializeField] private Text DashText;// show dash
 
@@ -46,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     public float BulletSpeed = 10f;//bullet speed
 
-
+    public CurrentPlayerMode Mode = CurrentPlayerMode.Base;//Variable for the power up tracker.
 
 
     void Start()
@@ -55,7 +60,7 @@ public class PlayerController : MonoBehaviour
         jump = true;
 
         MaxHealth = 100f;
-        CureentHealth = MaxHealth;
+        CurrentHealth = MaxHealth;
     }
 
     // Update is called once per frame
@@ -76,7 +81,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //jump and double jump
-        if (Input.GetButtonDown("Jump") && jump == true && DoubleJump >= 0)
+        if (Input.GetButtonDown("Jump") && jump == true && DoubleJump >= 0 && Mode != CurrentPlayerMode.Dog)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpH);
 
@@ -138,7 +143,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //load losescenes when the health equal 0
-        if(MaxHealth == 0 | CureentHealth == 0)
+        if(MaxHealth == 0 | CurrentHealth == 0)
         {
             SceneManager.LoadScene("LoseScenes");
         }
@@ -154,7 +159,6 @@ public class PlayerController : MonoBehaviour
         knockedBack = true;
 
         rb.linearVelocity = new Vector2(direction * knockbackForce,rb.linearVelocity.y);// applies horizontal velocity to push the player
-
         Invoke(nameof(EndKnockback), 0.2f);//end in 0.2 second
     }
 
@@ -173,11 +177,27 @@ public class PlayerController : MonoBehaviour
     }
     void ChangeHealth(float delat)//change the health
     {
-        CureentHealth = Mathf.Clamp(CureentHealth + delat, 0, MaxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth + delat, 0, MaxHealth);
 
-        HealthBar.fillAmount = CureentHealth/MaxHealth;
+        HealthBar.fillAmount = CurrentHealth/MaxHealth;
     }
-   
+    public void SetMode(CurrentPlayerMode m)//Function to change the player's form.
+    {
+        Mode = m;
+        if (Mode == CurrentPlayerMode.Base)//Checks if player is in no forms, then changes values accordingly
+        {
+            
+        }
+        if(Mode == CurrentPlayerMode.Dog)//Checks if player is in the Dog form, then changes values accordingly
+        {
+            speed = 8f;
+        }
+        if(Mode == CurrentPlayerMode.Bird)//Checks if player is in Bird form, then changes values accordingly
+        {
+
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground" && DoubleJump >= 0) //player only can jump after touch ground
