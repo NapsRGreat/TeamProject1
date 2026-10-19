@@ -1560,7 +1560,11 @@ MonoBehaviour:
   StartCount: 0
   BulletPrefab: {fileID: 2027364937654496373, guid: fcc753663742e8c4b882c557dee9dae9, type: 3}
   FirePoint: {fileID: 1042060432}
+  DogTimer: 0
+  DogTimerMax: 15
+  BirdTimer: 0
   BulletSpeed: 10
+  Mode: 1
 --- !u!1 &930920779
 GameObject:
   m_ObjectHideFlags: 0
