@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     public float BulletSpeed = 10f;//bullet speed
 
-    public CM Mode = CM.Base;//Variable for the power up tracker.
+    public CM Mode = CM.Base;//Variable for the player's current mode.
 
 
     void Start()
@@ -86,9 +86,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (Mode == CM.Dog)//Checks if player is in the Dog form, then changes values accordingly
         {
-            speed = 8f;
-            jumpH = 10f;
-            DashDis = 30f;
+            speed = 12f;
+            jumpH = 8f;
+            DashDis = 40f;
         }
         else if (Mode == CM.Bird)//Checks if player is in Bird form, then changes values accordingly
         {
@@ -100,10 +100,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(dirx * speed, rb.linearVelocity.y);
         }
-        if (DogTimer >= 0f)
+        if (DogTimer >= 0f) //Timer until the dog form ends.
         {
             DogTimer -= Time.deltaTime;
-            if (DogTimer < 0f)
+            if (DogTimer < 0f)//Ends dog form.
             {
                 Mode = CM.Base;
                 DogTimer = DogTimerMax;
@@ -113,15 +113,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && jump == true && DoubleJump >= 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpH);
-            SetMode(CM.Dog);
             DoubleJump -= 1;
 
-            if (DoubleJump == 0 && Mode != CM.Dog)//after two jum, jump become false
+            if (DoubleJump == 0)//after two jum, jump become false
             {
                 jump = false;
 
             }
             
+        }
+        if(Input.GetKeyDown(KeyCode.G) && Mode != CM.Dog) //Dog form testing button
+        {
+            SetMode(CM.Dog);
+
         }
 
         CoolDownDash += Time.deltaTime;

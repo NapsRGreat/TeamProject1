@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//This code is for the melee enemy/the enemy that walks towards you.
 public class EnemyAi : MonoBehaviour
 {
     public float DectRange = 5f;
