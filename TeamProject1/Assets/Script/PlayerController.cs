@@ -98,16 +98,16 @@ public class PlayerController : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.L))
             {
                 currentYValue = rb.position.y;
-                if (Input.GetKey(KeyCode.L))
-                {
-                    rb.linearVelocityY = currentYValue;
-                    rb.gravityScale = 0f;
-                }
-                if(Input.GetKeyUp(KeyCode.L)) {
-                    rb.gravityScale = 1f;
-                }
             }
-
+            if (Input.GetKey(KeyCode.L))
+            {
+                rb.linearVelocityY = 0f;
+                rb.gravityScale = 0f;
+            }
+            if (Input.GetKeyUp(KeyCode.L))
+            {
+                rb.gravityScale = 1f;
+            }
         }
         // player movement in horizontral
         dirx = Input.GetAxisRaw("Horizontal");
