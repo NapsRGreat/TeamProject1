@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public float DogTimer = 0f;
     public float DogTimerMax = 15f;
     public float BirdTimer = 0f;
-
+    public float currentYValue;
     public float BulletSpeed = 10f;//bullet speed
 
     public CM Mode = CM.Base;//Variable for the player's current mode.
@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
         {
             speed = 5f;
             jumpH = 5f;
+            rb.gravityScale = 1f;
+            DashDis = 15f;
         }
         else if (Mode == CM.Dog)//Checks if player is in the Dog form, then changes values accordingly
         {
@@ -92,6 +94,19 @@ public class PlayerController : MonoBehaviour
         }
         else if (Mode == CM.Bird)//Checks if player is in Bird form, then changes values accordingly
         {
+            
+            if(Input.GetKeyDown(KeyCode.L))
+            {
+                currentYValue = rb.position.y;
+                if (Input.GetKey(KeyCode.L))
+                {
+                    rb.linearVelocityY = currentYValue;
+                    rb.gravityScale = 0f;
+                }
+                if(Input.GetKeyUp(KeyCode.L)) {
+                    rb.gravityScale = 1f;
+                }
+            }
 
         }
         // player movement in horizontral
@@ -122,12 +137,16 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-        if(Input.GetKeyDown(KeyCode.G) && Mode != CM.Dog) //Dog form testing button
+        if(Input.GetKeyDown(KeyCode.G) && Mode == CM.Base) //Dog form testing button
         {
             SetMode(CM.Dog);
 
         }
+        if (Input.GetKeyDown(KeyCode.B) && Mode == CM.Base) //Dog form testing button
+        {
+            SetMode(CM.Bird);
 
+        }
         CoolDownDash += Time.deltaTime;
         if(CoolDownDash >= 3)//dash cool down
         {

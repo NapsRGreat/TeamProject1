@@ -960,9 +960,9 @@ RectTransform:
   - {fileID: 75587071}
   m_Father: {fileID: 2054237328}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -165, y: 150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 385, y: -105}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516107854
@@ -1563,8 +1563,9 @@ MonoBehaviour:
   DogTimer: 0
   DogTimerMax: 15
   BirdTimer: 0
+  currentYValue: 0
   BulletSpeed: 10
-  Mode: 1
+  Mode: 2
 --- !u!1 &930920779
 GameObject:
   m_ObjectHideFlags: 0
